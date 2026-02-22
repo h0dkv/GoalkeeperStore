@@ -1,76 +1,111 @@
+// =======================
+// PRODUCTS
+// =======================
 const products = [
     { id: 1, name: "Pro Gloves X1", price: 89, image: "https://via.placeholder.com/300x200" },
     { id: 2, name: "Elite GK Jersey", price: 69, image: "https://via.placeholder.com/300x200" },
     { id: 3, name: "GK Protection Pads", price: 49, image: "https://via.placeholder.com/300x200" }
 ];
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+// =======================
+// STATE (NO localStorage)
+// =======================
+let cart = [];
 
-const container = document.getElementById("products");
-
+// =======================
+// RENDER PRODUCTS
+// =======================
 function renderProducts() {
+    const container = document.getElementById("products");
+    if (!container) return;
+
     container.innerHTML = "";
-    products.forEach(p => {
-        container.innerHTML += `
-            <div class="product">
-                <img src="${p.image}">
-                <h3>${p.name}</h3>
-                <p>${p.price} лв</p>
-                <button onclick="addToCart(${p.id})">Добави в кошницата</button>
-            </div>
+
+    products.forEach((product, index) => {
+        const card = document.createElement("div");
+        card.classList.add("product", "fade-up");
+        card.style.animationDelay = `${index * 0.1}s`;
+
+        card.innerHTML = `
+            <img src="${product.image}">
+            <h3>${product.name}</h3>
+            <p>${product.price} лв</p>
+            <button class="add-btn">Добави</button>
         `;
+
+        card.querySelector(".add-btn").addEventListener("click", () => {
+            addToCart(product.id);
+        });
+
+        container.appendChild(card);
     });
 }
 
+// =======================
+// CART LOGIC
+// =======================
 function addToCart(id) {
-    const product = products.find(p => p.id === id);
-    cart.push(product);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    updateCart();
+    const existing = cart.find(item => item.id === id);
+
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        const product = products.find(p => p.id === id);
+        cart.push({ ...product, quantity: 1 });
+    }
+
+    updateCartCount();
+    animateCartIcon();
+    loadCartPage();
 }
 
-function updateCart() {
-    document.getElementById("cart-count").innerText = cart.length;
+function removeFromCart(id) {
+    cart = cart.filter(item => item.id !== id);
+    updateCartCount();
+    loadCartPage();
 }
 
-function openCart() {
-    document.getElementById("cart-modal").style.display = "flex";
-    renderCart();
+function updateCartCount() {
+    const el = document.getElementById("cart-count");
+    if (el) el.innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
 }
 
-function closeCart() {
-    document.getElementById("cart-modal").style.display = "none";
-}
-
-function renderCart() {
+// =======================
+// RENDER CART PAGE
+// =======================
+function loadCartPage() {
     const list = document.getElementById("cart-items");
     const totalEl = document.getElementById("cart-total");
+    if (!list) return;
+
     list.innerHTML = "";
     let total = 0;
 
     cart.forEach(item => {
-        total += item.price;
-        list.innerHTML += `<li>${item.name} - ${item.price} лв</li>`;
+        total += item.price * item.quantity;
+
+        const li = document.createElement("li");
+        li.classList.add("cart-item", "fade-in");
+
+        li.innerHTML = `
+            <span>${item.name} (${item.quantity}x)</span>
+            <span>${item.price * item.quantity} лв</span>
+            <button class="remove-btn">✕</button>
+        `;
+
+        li.querySelector(".remove-btn").addEventListener("click", () => {
+            removeFromCart(item.id);
+        });
+
+        list.appendChild(li);
     });
 
-    totalEl.innerText = total;
+    if (totalEl) totalEl.innerText = total;
 }
 
-function checkout() {
-    alert("Поръчката е успешна!");
-    cart = [];
-    localStorage.removeItem("cart");
-    updateCart();
-    closeCart();
-}
-
-function scrollToProducts(){
-    document.getElementById("products").scrollIntoView({behavior:"smooth"});
-}
-
-renderProducts();
-updateCart();
-
+// =======================
+// PRODUCT PAGE
+// =======================
 function loadProductPage() {
     const container = document.getElementById("product-page");
     if (!container) return;
@@ -79,34 +114,55 @@ function loadProductPage() {
     const id = parseInt(params.get("id"));
     const product = products.find(p => p.id === id);
 
-    if (product) {
-        container.innerHTML = `
+    if (!product) return;
+
+    container.innerHTML = `
+        <div class="product-detail fade-up">
             <img src="${product.image}">
             <div>
                 <h1>${product.name}</h1>
-                <p>${product.price} лв</p>
+                <p class="price">${product.price} лв</p>
                 <p>Професионално качество за максимално представяне.</p>
-                <button onclick="addToCart(${product.id})">Добави в кошницата</button>
+                <button id="detail-add">Добави в кошницата</button>
             </div>
-        `;
-    }
-}
+        </div>
+    `;
 
-function loadCartPage(){
-    const list = document.getElementById("cart-items");
-    const totalEl = document.getElementById("cart-total");
-    if(!list) return;
-
-    list.innerHTML = "";
-    let total = 0;
-
-    cart.forEach(item=>{
-        total += item.price;
-        list.innerHTML += `<li>${item.name} - ${item.price} лв</li>`;
+    document.getElementById("detail-add").addEventListener("click", () => {
+        addToCart(product.id);
     });
-
-    totalEl.innerText = total;
 }
 
+// =======================
+// CHECKOUT
+// =======================
+function checkout() {
+    if (cart.length === 0) {
+        alert("Количката е празна.");
+        return;
+    }
+
+    alert("Поръчката е приета!");
+    cart = [];
+    updateCartCount();
+    loadCartPage();
+}
+
+// =======================
+// ANIMATIONS
+// =======================
+function animateCartIcon() {
+    const icon = document.getElementById("cart-count");
+    if (!icon) return;
+
+    icon.classList.add("bounce");
+    setTimeout(() => icon.classList.remove("bounce"), 400);
+}
+
+// =======================
+// INIT
+// =======================
+renderProducts();
+updateCartCount();
 loadProductPage();
 loadCartPage();

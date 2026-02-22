@@ -350,3 +350,24 @@ button {
 button:hover {
     transform: scale(1.05);
 }
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.remove-btn {
+    background: #ff4d4d;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: white;
+    transition: 0.3s;
+}
+
+.remove-btn:hover {
+    background: #ff0000;
+}
