@@ -160,9 +160,11 @@ function animateCartIcon() {
 }
 
 // =======================
-// INIT
+// INIT (SAFE LOAD)
 // =======================
-renderProducts();
-updateCartCount();
-loadProductPage();
-loadCartPage();
+document.addEventListener("DOMContentLoaded", () => {
+    renderProducts();
+    updateCartCount();
+    loadProductPage();
+    loadCartPage();
+});
