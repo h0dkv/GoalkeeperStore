@@ -1,0 +1,31 @@
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 1s ease;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: #00ff88;
+    width: 0%;
+    z-index: 2000;
+}
+
+.cursor {
+    width: 15px;
+    height: 15px;
+    background: #00ff88;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    mix-blend-mode: difference;
+    z-index: 3000;
+}   

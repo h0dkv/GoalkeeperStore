@@ -1,0 +1,31 @@
+.blog-grid {
+    padding: 150px 8%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.blog-card {
+    background: rgba(255,255,255,0.05);
+    padding: 30px;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.blog-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 25px rgba(0,255,136,0.3);
+}
+
+.blog-post {
+    padding: 150px 15%;
+}
+
+.comments textarea {
+    width: 100%;
+    height: 100px;
+    margin-top: 20px;
+    background: #111;
+    color: white;
+    border: 1px solid #333;
+}

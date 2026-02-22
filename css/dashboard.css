@@ -1,0 +1,56 @@
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background: #111;
+    padding: 30px;
+}
+
+.sidebar nav a {
+    display: block;
+    margin: 15px 0;
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.sidebar nav a:hover {
+    color: #00ff88;
+}
+
+.dashboard-content {
+    flex: 1;
+    padding: 50px;
+}
+
+.widgets {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.widget {
+    background: rgba(255,255,255,0.05);
+    padding: 30px;
+    border-radius: 15px;
+    transition: 0.3s;
+}
+
+.widget:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(0,255,136,0.3);
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.orders-table th,
+.orders-table td {
+    padding: 15px;
+    border-bottom: 1px solid #333;
+}

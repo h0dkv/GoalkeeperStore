@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="bg">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - GKS Store</title>
+
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+
+    <div class="dashboard">
+        <aside class="sidebar">
+            <h2>Admin</h2>
+            <nav>
+                <a href="#">Поръчки</a>
+                <a href="#">Профил</a>
+                <a href="#">Статистика</a>
+            </nav>
+        </aside>
+
+        <main class="dashboard-content">
+            <div class="widgets">
+                <div class="widget">
+                    <h3>Продажби</h3>
+                    <p>2450 лв</p>
+                </div>
+                <div class="widget">
+                    <h3>Поръчки</h3>
+                    <p>58</p>
+                </div>
+            </div>
+
+            <table class="orders-table">
+                <tr>
+                    <th>ID</th>
+                    <th>Клиент</th>
+                    <th>Сума</th>
+                </tr>
+                <tr>
+                    <td>#1021</td>
+                    <td>Ivan Petrov</td>
+                    <td>89 лв</td>
+                </tr>
+            </table>
+        </main>
+    </div>
+
+    <script type="module">
+        import { protectRoute } from "./js/guard.js";
+        protectRoute();
+    </script>
+
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+
+</html>
