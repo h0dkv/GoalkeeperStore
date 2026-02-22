@@ -1,112 +1,115 @@
+// ======================
+// PRODUCTS DATA
+// ======================
 const products = [
-    { id: 1, name: "Pro Gloves X1", price: 89, image: "https://via.placeholder.com/300x200" },
-    { id: 2, name: "Elite GK Jersey", price: 69, image: "https://via.placeholder.com/300x200" },
-    { id: 3, name: "GK Protection Pads", price: 49, image: "https://via.placeholder.com/300x200" }
+    { id: 1, name: "Pro Gloves X1", price: 89, image: "https://via.placeholder.com/400x250" },
+    { id: 2, name: "Elite GK Jersey", price: 69, image: "https://via.placeholder.com/400x250" },
+    { id: 3, name: "GK Protection Pads", price: 49, image: "https://via.placeholder.com/400x250" },
+    { id: 4, name: "Premium GK Shorts", price: 39, image: "https://via.placeholder.com/400x250" }
 ];
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+// ======================
+// STATE (NO localStorage)
+// ======================
+let cart = [];
 
-const container = document.getElementById("products");
-
+// ======================
+// RENDER PRODUCTS
+// ======================
 function renderProducts() {
+    const container = document.getElementById("products");
+    if (!container) return;
+
     container.innerHTML = "";
-    products.forEach(p => {
-        container.innerHTML += `
-            <div class="product">
-                <img src="${p.image}">
-                <h3>${p.name}</h3>
-                <p>${p.price} лв</p>
-                <button onclick="addToCart(${p.id})">Добави в кошницата</button>
-            </div>
+
+    products.forEach((p, index) => {
+        const card = document.createElement("div");
+        card.classList.add("product", "fade-up");
+        card.style.animationDelay = `${index * 0.1}s`;
+
+        card.innerHTML = `
+            <img src="${p.image}">
+            <h3>${p.name}</h3>
+            <p>${p.price} лв</p>
+            <button onclick="addToCart(${p.id})">Добави</button>
         `;
+
+        container.appendChild(card);
     });
 }
 
+// ======================
+// CART
+// ======================
 function addToCart(id) {
     const product = products.find(p => p.id === id);
     cart.push(product);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    updateCart();
+    updateCartCount();
+    animateCartIcon();
 }
 
-function updateCart() {
-    document.getElementById("cart-count").innerText = cart.length;
+function updateCartCount() {
+    const el = document.getElementById("cart-count");
+    if (el) el.innerText = cart.length;
 }
 
-function openCart() {
-    document.getElementById("cart-modal").style.display = "flex";
-    renderCart();
-}
-
-function closeCart() {
-    document.getElementById("cart-modal").style.display = "none";
-}
-
-function renderCart() {
+function loadCartPage() {
     const list = document.getElementById("cart-items");
     const totalEl = document.getElementById("cart-total");
+    if (!list) return;
+
     list.innerHTML = "";
     let total = 0;
 
     cart.forEach(item => {
         total += item.price;
-        list.innerHTML += `<li>${item.name} - ${item.price} лв</li>`;
+        list.innerHTML += `
+            <li class="cart-item fade-in">
+                ${item.name} - ${item.price} лв
+            </li>
+        `;
     });
 
     totalEl.innerText = total;
 }
 
 function checkout() {
-    alert("Поръчката е успешна!");
+    alert("Поръчката е приета!");
     cart = [];
-    localStorage.removeItem("cart");
-    updateCart();
-    closeCart();
+    updateCartCount();
+    loadCartPage();
 }
 
-function scrollToProducts(){
-    document.getElementById("products").scrollIntoView({behavior:"smooth"});
-}
+// ======================
+// ANIMATIONS
+// ======================
 
-renderProducts();
-updateCart();
-
-function loadProductPage() {
-    const container = document.getElementById("product-page");
-    if (!container) return;
-
-    const params = new URLSearchParams(window.location.search);
-    const id = parseInt(params.get("id"));
-    const product = products.find(p => p.id === id);
-
-    if (product) {
-        container.innerHTML = `
-            <img src="${product.image}">
-            <div>
-                <h1>${product.name}</h1>
-                <p>${product.price} лв</p>
-                <p>Професионално качество за максимално представяне.</p>
-                <button onclick="addToCart(${product.id})">Добави в кошницата</button>
-            </div>
-        `;
-    }
-}
-
-function loadCartPage(){
-    const list = document.getElementById("cart-items");
-    const totalEl = document.getElementById("cart-total");
-    if(!list) return;
-
-    list.innerHTML = "";
-    let total = 0;
-
-    cart.forEach(item=>{
-        total += item.price;
-        list.innerHTML += `<li>${item.name} - ${item.price} лв</li>`;
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+        }
     });
+}, { threshold: 0.2 });
 
-    totalEl.innerText = total;
+document.querySelectorAll(".fade-up").forEach(el => {
+    observer.observe(el);
+});
+
+// Cart bounce animation
+function animateCartIcon() {
+    const icon = document.getElementById("cart-count");
+    icon.classList.add("bounce");
+    setTimeout(() => icon.classList.remove("bounce"), 500);
 }
 
-loadProductPage();
+// Page load animation
+window.addEventListener("load", () => {
+    document.body.classList.add("loaded");
+});
+
+// INIT
+renderProducts();
+updateCartCount();
 loadCartPage();
