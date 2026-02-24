@@ -5,58 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GKS Store</title>
-
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/animations.css">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="cursor"></div>
-    <div class="scroll-progress"></div>
-
-    <header class="header">
-        <div class="logo">GKS<span>Store</span></div>
+    <header>
+        <h1>GKS Store</h1>
         <nav>
-            <a href="index.html">Начало</a>
-            <a href="products.html">Продукти</a>
-            <a href="blog.html">Блог</a>
-            <a href="contact.html">Контакти</a>
-            <a href="cart.html" class="cart-icon">🛒 <span id="cart-count">0</span></a>
+            <button onclick="showPage('home')">Начало</button>
+            <button onclick="showPage('products')">Продукти</button>
+            <button onclick="showPage('cart')">Количка (<span id="cart-count">0</span>)</button>
         </nav>
     </header>
 
-    <section class="hero">
-        <h1 class="reveal">Професионална <span>вратарска</span> екипировка</h1>
-        <p class="reveal">Създадена за шампиони</p>
-        <button class="btn-primary reveal">Пазарувай сега</button>
-    </section>
+    <main id="app"></main>
 
-    <section class="stats">
-        <div class="stat reveal">
-            <h2 data-count="2500">0</h2>
-            <p>Продадени продукти</p>
-        </div>
-        <div class="stat reveal">
-            <h2 data-count="1200">0</h2>
-            <p>Доволни клиенти</p>
-        </div>
-        <div class="stat reveal">
-            <h2 data-count="5">0</h2>
-            <p>Години опит</p>
-        </div>
-    </section>
-
-    <footer>
-        © 2026 GKS Store
-    </footer>
-
-    <script type="module" src="js/app.js"></script>
+    <script src="script.js"></script>
 </body>
 
-</html> 
+</html>
