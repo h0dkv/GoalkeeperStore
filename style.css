@@ -150,7 +150,7 @@ body {
 
 .logo span {
     background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--primary));
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: textGradient 4s ease infinite;
 }
