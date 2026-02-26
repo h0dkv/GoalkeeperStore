@@ -26,7 +26,34 @@ function showPage(page) {
         app.innerHTML = `
             <section class="hero reveal">
                 <h1>Добре дошли в GKS Store</h1>
-                <a href="products.html" class="btn-primary">Виж продукти</a>
+                <div style="margin-top:20px">
+                    <a href="products.html" class="btn-primary">Виж продукти</a>
+                    <a href="#about-section" class="btn-primary" style="margin-left:12px">За нас</a>
+                    <a href="#contact-section" class="btn-primary" style="margin-left:12px">Контакти</a>
+                </div>
+            </section>
+
+            <section id="about-section" class="about-section reveal">
+                <h2>Кои сме ние?</h2>
+                <p>GKS Store е премиум бранд за вратарска екипировка, създаден с една мисия – да дадем на всеки вратар увереността да доминира на терена.</p>
+            </section>
+
+            <section id="contact-section" class="contact-wrapper reveal">
+                <div class="contact-info">
+                    <h2>Контактна информация</h2>
+                    <p>📍 Варна, България</p>
+                    <p>📞 +359 888 123 456</p>
+                    <p>✉️ info@gksstore.com</p>
+                </div>
+                <div class="contact-form">
+                    <h2>Изпрати съобщение</h2>
+                    <form id="contact-form-inline">
+                        <input type="text" placeholder="Име" required>
+                        <input type="email" placeholder="Имейл" required>
+                        <textarea placeholder="Съобщение" required></textarea>
+                        <button type="submit" class="btn-primary">Изпрати</button>
+                    </form>
+                </div>
             </section>
         `;
         initReveal();
@@ -37,13 +64,66 @@ function showPage(page) {
     }
 }
 
+// initialize nav links to support SPA scrolling when on the index/home app
+function initNavLinks() {
+    document.querySelectorAll('a.nav-item, header a').forEach(a => {
+        a.addEventListener('click', (e) => {
+            const href = a.getAttribute('href');
+
+            // if we have the single-page app container, handle scroll to anchors
+            const app = document.getElementById('app');
+            if (app && (href === 'about.html' || href === 'contact.html' || href === '#about-section' || href === '#contact-section')) {
+                e.preventDefault();
+                // ensure home content is rendered
+                showPage('home');
+                // wait for DOM update
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    if (href.includes('about') || href === '#about-section') {
+                        const el = document.getElementById('about-section');
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                    if (href.includes('contact') || href === '#contact-section') {
+                        const el = document.getElementById('contact-section');
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }));
+            }
+            // products link with SPA hook
+            if (app && href === 'index.html') {
+                e.preventDefault();
+                showPage('home');
+            }
+        });
+    });
+}
+
+function initContactForms() {
+    // handle inline contact form on home
+    const inline = document.getElementById('contact-form-inline');
+    if (inline) {
+        inline.addEventListener('submit', e => {
+            e.preventDefault();
+            inline.innerHTML = '<h3>Благодарим! Ще се свържем с Вас скоро.</h3>';
+        });
+    }
+
+    // handle standalone contact page form
+    const pageForm = document.getElementById('contact-form');
+    if (pageForm) {
+        pageForm.addEventListener('submit', e => {
+            e.preventDefault();
+            pageForm.innerHTML = '<h3>Благодарим! Ще се свържем с Вас скоро.</h3>';
+        });
+    }
+}
+
 /* ===== API ===== */
 async function fetchProducts() {
     return [
-        { id: 1, name: "Pro Gloves X1", price: 89 },
-        { id: 2, name: "Elite Jersey", price: 69 },
-        { id: 3, name: "GK Protection", price: 49 },
-        { id: 4, name: "Training Gloves", price: 59 }
+        { id: 1, name: "Професионални Ръкавици X1", price: 89 },
+        { id: 2, name: "Елитен Джърси", price: 69 },
+        { id: 3, name: "Защита за вратаря", price: 49 },
+        { id: 4, name: "Тренировъчни Ръкавици", price: 59 }
     ];
 }
 
@@ -145,6 +225,10 @@ function renderCart() {
         li.textContent = `${p.name} - ${formatPrice(p.price)}`;
         li.classList.add('reveal');
         li.style.transitionDelay = `${idx * 0.1}s`;
+        // allow removal on click
+        li.addEventListener('click', () => {
+            removeFromCart(idx);
+        });
         list.appendChild(li);
     });
     if (totalEl) {
@@ -158,6 +242,12 @@ function checkout() {
     window.location.href = "checkout.html";
 }
 
+function removeFromCart(index) {
+    state.cart.splice(index, 1);
+    saveCart();
+    renderCart();
+    updateCartCount();
+}
 function initCheckout() {
     const content = document.getElementById("checkout-content");
     if (!content) return;
@@ -283,10 +373,10 @@ function protectRoute() {
 })();
 
 /* ===== Blog ===== */
-console.log("Blog engine ready");
+console.log("Блог движок готов");
 
 /* ===== Dashboard ===== */
-console.log("Dashboard loaded");
+console.log("Таблото е заредено");
 
 /* ===== Products page ===== */
 (function () {
@@ -387,4 +477,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initCheckout();
 
     if (document.getElementById('app')) showPage('home');
+    // init SPA-friendly nav links and contact forms
+    initNavLinks();
+    initContactForms();
 });
