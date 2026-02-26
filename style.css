@@ -291,15 +291,21 @@ nav a:hover,
     animation: pulse 1s infinite, glow 2s infinite;
     box-shadow: 0 6px 25px rgba(30, 136, 229, 0.5), 0 0 20px var(--primary);
     transform: translateY(-2px);
-}
     animation: pulse 1s infinite, glow 2s infinite;
     box-shadow: 0 6px 25px rgba(30, 136, 229, 0.5), 0 0 20px var(--primary);
     transform: translateY(-2px);
 }
 
 @keyframes glow {
-    0%,100% { box-shadow: 0 0 10px var(--primary); }
-    50% { box-shadow: 0 0 30px var(--primary); }
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px var(--primary);
+    }
+
+    50% {
+        box-shadow: 0 0 30px var(--primary);
+    }
 }
 
 @keyframes pulse {
@@ -341,13 +347,16 @@ nav a:hover,
 }
 
 @keyframes slideIn {
-    to { opacity: 1; transform: translateX(0); }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 /* inputs appearance */
 .input-group input,
 .input-group textarea {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
     border: 1px solid #333;
     border-radius: 8px;
     padding: 12px;
@@ -647,7 +656,8 @@ nav a:hover,
     list-style: none;
 }
 
-.cart-summary, .order-summary {
+.cart-summary,
+.order-summary {
     flex: 1;
     background: var(--card-bg);
     padding: 20px;
@@ -667,7 +677,8 @@ nav a:hover,
     margin-bottom: 10px;
 }
 
-.cart-summary button, .order-summary button {
+.cart-summary button,
+.order-summary button {
     width: 100%;
     margin-top: 10px;
 }
@@ -676,7 +687,6 @@ nav a:hover,
     padding: 100px 8%;
 }
 
-}
 
 .product-card button {
     margin-top: 15px;
@@ -1158,8 +1168,8 @@ footer:hover {
 /* ===== Footer ===== */
 .site-footer {
     padding: 40px 8%;
-    background: linear-gradient(180deg, rgba(10,14,39,0.9), rgba(6,10,30,0.95));
-    border-top: 1px solid rgba(30,136,229,0.08);
+    background: linear-gradient(180deg, rgba(10, 14, 39, 0.9), rgba(6, 10, 30, 0.95));
+    border-top: 1px solid rgba(30, 136, 229, 0.08);
     display: flex;
     gap: 40px;
     color: var(--text-lighter);
@@ -1176,9 +1186,15 @@ footer:hover {
     margin-bottom: 10px;
 }
 
-.site-footer p { color: var(--text-lighter); line-height: 1.6; }
+.site-footer p {
+    color: var(--text-lighter);
+    line-height: 1.6;
+}
 
-.site-footer h4 { color: var(--text-light); margin-bottom: 8px; }
+.site-footer h4 {
+    color: var(--text-light);
+    margin-bottom: 8px;
+}
 
 .footer-links a {
     display: block;
@@ -1187,14 +1203,16 @@ footer:hover {
     margin-bottom: 6px;
 }
 
-.footer-links a:hover { color: var(--primary-light); }
+.footer-links a:hover {
+    color: var(--primary-light);
+}
 
 .site-footer .footer-bottom {
     width: 100%;
     margin-top: 18px;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.6);
     font-size: 0.95rem;
-    border-top: 1px solid rgba(255,255,255,0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.02);
     padding-top: 12px;
 }
 
@@ -1214,7 +1232,10 @@ h2 {
     margin-bottom: 16px;
 }
 
-h3,h4,h5,h6 {
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Inter', 'Segoe UI', sans-serif;
     font-weight: 600;
     color: var(--text-light);
