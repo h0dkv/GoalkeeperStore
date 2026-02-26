@@ -6,6 +6,18 @@ const state = {
     user: null
 };
 
+/* ===== Currency ===== */
+const CURRENCY = {
+    symbol: '€',
+    code: 'EUR',
+    rateFromBGN: 1.95583 // if you ever convert legacy BGN amounts
+};
+
+function formatPrice(amount) {
+    return amount.toFixed(2) + ' ' + CURRENCY.symbol;
+}
+
+
 /* ===== Navigation (index) ===== */
 function showPage(page) {
     const app = document.getElementById('app');
@@ -107,13 +119,18 @@ function initHeader() {
 /* ===== Cart ===== */
 function addToCart(product) {
     state.cart.push(product);
+    saveCart();
     updateCartCount();
     animateAdd();
 }
 
 function updateCartCount() {
     const count = document.getElementById("cart-count");
-    if (count) count.textContent = state.cart.length;
+    if (count) {
+        count.textContent = state.cart.length;
+        count.classList.add('pulse');
+        setTimeout(() => count.classList.remove('pulse'), 600);
+    }
 }
 
 function renderCart() {
@@ -125,12 +142,16 @@ function renderCart() {
     state.cart.forEach((p, idx) => {
         total += p.price;
         const li = document.createElement("li");
-        li.textContent = `${p.name} - ${p.price} лв`;
+        li.textContent = `${p.name} - ${formatPrice(p.price)}`;
         li.classList.add('reveal');
         li.style.transitionDelay = `${idx * 0.1}s`;
         list.appendChild(li);
     });
-    if (totalEl) totalEl.textContent = total;
+    if (totalEl) {
+        totalEl.textContent = formatPrice(total);
+        totalEl.classList.add('pulse');
+        setTimeout(() => totalEl.classList.remove('pulse'), 800);
+    }
 }
 
 function checkout() {
@@ -146,7 +167,14 @@ function initCheckout() {
         return;
     }
 
+    // show summary
+    let total = state.cart.reduce((sum, p) => sum + p.price, 0);
     content.innerHTML = `
+        <div class="order-summary reveal">
+            <h3>Вашата поръчка</h3>
+            <ul>${state.cart.map(p => `<li>${p.name} - ${formatPrice(p.price)}</li>`).join('')}</ul>
+            <p><strong>Общо: ${formatPrice(total)}</strong></p>
+        </div>
         <form id="checkout-form" class="reveal">
             <div class="input-group">
                 <input type="text" required><label>Име</label>
@@ -165,6 +193,7 @@ function initCheckout() {
     form.addEventListener("submit", e => {
         e.preventDefault();
         state.cart = [];
+        saveCart();
         updateCartCount();
         content.innerHTML = '<h2 class="reveal">Благодарим за покупката!</h2>';
     });
@@ -176,6 +205,24 @@ function animateAdd() {
 
     icon.style.transform = "scale(1.3)";
     setTimeout(() => icon.style.transform = "scale(1)", 300);
+}
+
+/* ===== Persistence ===== */
+function saveCart() {
+    try {
+        localStorage.setItem('gks_cart', JSON.stringify(state.cart));
+    } catch (e) {
+        console.warn('could not save cart', e);
+    }
+}
+
+function loadCart() {
+    try {
+        const data = localStorage.getItem('gks_cart');
+        if (data) state.cart = JSON.parse(data);
+    } catch (e) {
+        console.warn('could not load cart', e);
+    }
 }
 
 /* ===== Guard ===== */
@@ -265,7 +312,7 @@ console.log("Dashboard loaded");
 
             card.innerHTML = `
             <h3>${product.name}</h3>
-            <p>${product.price} лв</p>
+            <p>${formatPrice(product.price)}</p>
             <button data-id="${product.id}">Добави</button>
         `;
 
@@ -303,7 +350,7 @@ console.log("Dashboard loaded");
         quickView.innerHTML = `
         <div class="modal-content reveal">
             <h2>${product.name}</h2>
-            <p>${product.price} лв</p>
+            <p>${formatPrice(product.price)}</p>
             <button id="add" class="btn-primary">Добави в количката</button>
             <button id="close">Затвори</button>
         </div>
@@ -326,6 +373,7 @@ console.log("Dashboard loaded");
 
 /* ===== App initialization ===== */
 document.addEventListener("DOMContentLoaded", () => {
+    loadCart();
     initReveal();
     initCounter();
     initScrollProgress();
