@@ -259,9 +259,17 @@ nav a:hover,
 }
 
 @keyframes gradientBg {
-    0% {background-position:0% 50%;}
-    50% {background-position:100% 50%;}
-    100% {background-position:0% 50%;}
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .btn-primary:hover {
@@ -316,7 +324,8 @@ nav a:hover,
 }
 
 .cursor {
-    display: none; /* custom cursor disabled */
+    display: none;
+    /* custom cursor disabled */
 }
 
 /* ===== Blog ===== */
@@ -325,7 +334,7 @@ nav a:hover,
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 40px;
-    background: linear-gradient(0deg, rgba(0,0,0,0.6), transparent);
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), transparent);
 }
 
 .blog-card {
@@ -338,9 +347,11 @@ nav a:hover,
 .blog-card:nth-child(odd) {
     border-left: 4px solid var(--accent1);
 }
+
 .blog-card:nth-child(even) {
     border-left: 4px solid var(--accent2);
 }
+
 .blog-card:nth-child(3n) {
     border-left: 4px solid var(--accent3);
 }
@@ -419,9 +430,13 @@ nav a:hover,
     opacity: 0.3;
 }
 
-.widget:nth-child(2)::before { background: var(--accent2); }
+.widget:nth-child(2)::before {
+    background: var(--accent2);
+}
 
-.widget:nth-child(3)::before { background: var(--accent3); }
+.widget:nth-child(3)::before {
+    background: var(--accent3);
+}
 
 /* stats section styles */
 .stats-section {
@@ -431,9 +446,17 @@ nav a:hover,
     justify-content: center;
 }
 
-.stats-section .stat:nth-child(1) h3 { color: var(--accent1); }
-.stats-section .stat:nth-child(2) h3 { color: var(--accent2); }
-.stats-section .stat:nth-child(3) h3 { color: var(--accent3); }
+.stats-section .stat:nth-child(1) h3 {
+    color: var(--accent1);
+}
+
+.stats-section .stat:nth-child(2) h3 {
+    color: var(--accent2);
+}
+
+.stats-section .stat:nth-child(3) h3 {
+    color: var(--accent3);
+}
 
 .stats-section .stat {
     background: var(--card-bg);
@@ -441,7 +464,11 @@ nav a:hover,
     padding: 20px;
     transition: transform var(--transition), box-shadow var(--transition);
 }
-.stats-section .stat:hover { transform: translateY(-5px); box-shadow: 0 0 20px rgba(0,255,136,0.3); }
+
+.stats-section .stat:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
 
 .widget:hover {
     transform: translateY(-5px);
@@ -462,7 +489,7 @@ nav a:hover,
 /* ===== Pages (products, filters, modals) ===== */
 .products-page {
     padding: 150px 8% 80px;
-    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.5));
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.5));
 }
 
 .product-grid {
@@ -472,7 +499,7 @@ nav a:hover,
 }
 
 .product-card {
-    background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(255,255,255,0.03));
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(255, 255, 255, 0.03));
     padding: 20px;
     border-radius: 20px;
     transition: transform 0.3s ease, box-shadow 0.3s;
@@ -481,8 +508,14 @@ nav a:hover,
     border-left: 6px solid var(--accent1);
 }
 
-.product-card:nth-child(2n) { border-left-color: var(--accent2); }
-.product-card:nth-child(3n) { border-left-color: var(--accent3); }
+.product-card:nth-child(2n) {
+    border-left-color: var(--accent2);
+}
+
+.product-card:nth-child(3n) {
+    border-left-color: var(--accent3);
+}
+
 .product-card:hover {
     transform: rotateY(5deg) rotateX(5deg) scale(1.05);
     box-shadow: 0 0 40px var(--primary);
@@ -510,6 +543,7 @@ nav a:hover,
     cursor: pointer;
     transition: border-color var(--transition), box-shadow var(--transition);
 }
+
 .filters select:focus {
     border-color: var(--primary);
     box-shadow: 0 0 10px var(--primary);
@@ -554,6 +588,7 @@ nav a:hover,
     background: linear-gradient(45deg, var(--accent1), var(--accent2), var(--accent3));
     border-radius: 22px;
 }
+
 .modal.show .modal-content {
     transform: scale(1);
     opacity: 1;
@@ -639,7 +674,8 @@ nav a:hover,
 
 /* ===== Additional Page Styles ===== */
 
-h2, h3 {
+h2,
+h3 {
     background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3));
     background-clip: text;
     -webkit-background-clip: text;
@@ -659,13 +695,19 @@ h2, h3 {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle, rgba(0,255,136,0.1), transparent);
+    background: radial-gradient(circle, rgba(0, 255, 136, 0.1), transparent);
     pointer-events: none;
     animation: fadeBg 10s infinite alternate;
 }
 
 @keyframes fadeBg {
-    from {opacity:0;} to {opacity:1;}
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .page-header h1 {
@@ -680,7 +722,7 @@ h2, h3 {
 
 .about-section {
     padding: 60px 8%;
-    background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(0,0,0,0.5));
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 0, 0, 0.5));
     border-radius: 15px;
 }
 
@@ -698,9 +740,17 @@ h2, h3 {
     transition: 0.3s;
 }
 
-.value-box:nth-child(1) { border-top: 3px solid var(--accent1); }
-.value-box:nth-child(2) { border-top: 3px solid var(--accent2); }
-.value-box:nth-child(3) { border-top: 3px solid var(--accent3); }
+.value-box:nth-child(1) {
+    border-top: 3px solid var(--accent1);
+}
+
+.value-box:nth-child(2) {
+    border-top: 3px solid var(--accent2);
+}
+
+.value-box:nth-child(3) {
+    border-top: 3px solid var(--accent3);
+}
 
 .value-box:hover {
     transform: translateY(-5px);
@@ -743,7 +793,7 @@ h2, h3 {
 }
 
 .contact-info {
-    background: linear-gradient(45deg, var(--accent1)33%,var(--accent2)33%,var(--accent2)66%,var(--accent3)66%);
+    background: linear-gradient(45deg, var(--accent1)33%, var(--accent2)33%, var(--accent2)66%, var(--accent3)66%);
     padding: 20px;
     border-radius: 15px;
 }
@@ -789,14 +839,23 @@ h2, h3 {
     color: white;
     border-radius: 8px;
 }
+
 .checkout-wrapper input:focus {
     border-color: var(--accent2);
     box-shadow: 0 0 8px var(--accent2);
 }
 
-.checkout-wrapper .step:nth-child(1) { border: 2px solid var(--accent1); }
-.checkout-wrapper .step:nth-child(2) { border: 2px solid var(--accent2); }
-.checkout-wrapper .step:nth-child(3) { border: 2px solid var(--accent3); }
+.checkout-wrapper .step:nth-child(1) {
+    border: 2px solid var(--accent1);
+}
+
+.checkout-wrapper .step:nth-child(2) {
+    border: 2px solid var(--accent2);
+}
+
+.checkout-wrapper .step:nth-child(3) {
+    border: 2px solid var(--accent3);
+}
 
 .checkout-wrapper .step.active {
     background: linear-gradient(90deg, var(--accent1), var(--accent2));
