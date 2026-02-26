@@ -81,18 +81,7 @@ function initScrollProgress() {
 }
 
 function initCursor() {
-    const cursor = document.querySelector(".cursor");
-    if (!cursor) return;
-    document.addEventListener("mousemove", e => {
-        cursor.style.left = e.clientX + "px";
-        cursor.style.top = e.clientY + "px";
-    });
-    document.addEventListener("mousedown", () => {
-        cursor.style.transform = "scale(2)";
-    });
-    document.addEventListener("mouseup", () => {
-        cursor.style.transform = "scale(1)";
-    });
+    // custom cursor disabled
 }
 
 function initHeader() {
@@ -340,7 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initReveal();
     initCounter();
     initScrollProgress();
-    initCursor();
+    //initCursor(); // disabled custom cursor
     initHeader();
     protectRoute();
     updateCartCount();
