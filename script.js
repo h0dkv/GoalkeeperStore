@@ -87,6 +87,32 @@ function initCursor() {
         cursor.style.left = e.clientX + "px";
         cursor.style.top = e.clientY + "px";
     });
+    document.addEventListener("mousedown", () => {
+        cursor.style.transform = "scale(2)";
+    });
+    document.addEventListener("mouseup", () => {
+        cursor.style.transform = "scale(1)";
+    });
+}
+
+function initHeader() {
+    const header = document.querySelector('.header');
+    const nav = document.querySelector('.nav-links');
+    const toggle = document.querySelector('.menu-toggle');
+    if (!header) return;
+    window.addEventListener('scroll', () => {
+        header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+    if (toggle && nav) {
+        toggle.addEventListener('click', () => {
+            nav.classList.toggle('open');
+        });
+        window.addEventListener('click', e => {
+            if (!nav.contains(e.target) && !toggle.contains(e.target)) {
+                nav.classList.remove('open');
+            }
+        });
+    }
 }
 
 /* ===== Cart ===== */
@@ -107,10 +133,12 @@ function renderCart() {
     if (!list) return;
     list.innerHTML = "";
     let total = 0;
-    state.cart.forEach(p => {
+    state.cart.forEach((p, idx) => {
         total += p.price;
         const li = document.createElement("li");
         li.textContent = `${p.name} - ${p.price} лв`;
+        li.classList.add('reveal');
+        li.style.transitionDelay = `${idx * 0.1}s`;
         list.appendChild(li);
     });
     if (totalEl) totalEl.textContent = total;
@@ -281,22 +309,25 @@ console.log("Dashboard loaded");
     function openQuickView(product) {
         if (!quickView) return;
         quickView.classList.remove("hidden");
+        quickView.classList.add("show");
 
         quickView.innerHTML = `
-        <div class="modal-content">
+        <div class="modal-content reveal">
             <h2>${product.name}</h2>
             <p>${product.price} лв</p>
-            <button id="add">Добави в количката</button>
+            <button id="add" class="btn-primary">Добави в количката</button>
             <button id="close">Затвори</button>
         </div>
     `;
 
         document.getElementById("add").onclick = () => {
             addToCart(product);
+            quickView.classList.remove("show");
             quickView.classList.add("hidden");
         };
 
         document.getElementById("close").onclick = () => {
+            quickView.classList.remove("show");
             quickView.classList.add("hidden");
         };
     }
@@ -310,6 +341,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initCounter();
     initScrollProgress();
     initCursor();
+    initHeader();
     protectRoute();
     updateCartCount();
 

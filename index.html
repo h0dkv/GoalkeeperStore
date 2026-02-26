@@ -14,11 +14,12 @@
 
     <header class="header">
         <div class="logo">GKS<span>Store</span></div>
-        <nav>
-            <button onclick="showPage('home')">Начало</button>
-            <button onclick="showPage('products')">Продукти</button>
-            <button onclick="showPage('cart')">Количка (<span id="cart-count">0</span>)</button>
+        <nav class="nav-links">
+            <a href="#" class="nav-item" onclick="showPage('home')">Начало</a>
+            <a href="#" class="nav-item" onclick="showPage('products')">Продукти</a>
+            <a href="#" class="nav-item" onclick="showPage('cart')">Количка (<span id="cart-count">0</span>)</a>
         </nav>
+        <button class="menu-toggle" aria-label="Меню">☰</button>
     </header>
 
     <main id="app" class="reveal"></main>
